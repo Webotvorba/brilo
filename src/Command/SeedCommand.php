@@ -117,6 +117,6 @@ class SeedCommand extends Command
             }
         }
         $output->writeln('<info>Seeding data (Comments) infoful...</info>');
-        return Command::info;
+        return Command::SUCCESS;
     }
 }

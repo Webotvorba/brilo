@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PostController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
-    }
+
     #[Route('/{page}', name: 'post.index', requirements: ['page' => '\d+'], defaults: ['page' => 1], methods: ['GET'])]
     public function index(PostRepository $postRepository, PaginatorInterface $paginator, int $page, Request $request): Response
     {

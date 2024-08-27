@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">
+                        {{ post.body }}
+                    </p>
+                </div>
+            </div>
+
+            <hr>
+
+            <h4 class="mb-3">Komentáre</h4>
+
+            {% for comment in post.comments %}
+                <div class="d-flex border-bottom py-3">
+                    <div class="flex-shrink-0">
+                        <img src="https://api.dicebear.com/9.x/bottts-neutral/png?seed={{ (comment.name|url_encode) }}" alt="{{ comment.name }}" class="img-fluid rounded-5">
+                    </div>
+                    <div class="flex-grow-1 ms-3 align-self-center">
+                        <h5>{{ comment.name }} <br><small class="text-muted">{{ comment.email }}</small></h5>
+                        {{ comment.body }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-0">{{ post.author.name }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Username:</strong> {{ post.author.username }}</li>
+                    <li class="list-group-item"><strong>E-mail:</strong> {{ post.author.email }}</li>
+                    <li class="list-group-item"><strong>Phone:</strong> {{ post.author.phone }}</li>
+                    <li class="list-group-item"><strong>Website:</strong> {{ post.author.website }}</li>
+                </ul>
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Organizácia</h5>
+                    <ul class="list-unstyled m-0 p-0">
+                        {% for key, line in post.author.company %}
+                            {% if(key == "name") %}
+                                <li><strong>{{ line }}</strong></li>
+                            {% else %}
+                                <li>{{ line }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Adresa</h5>
+                    <ul class="list-unstyled m-0 p-0">
+                        {% for line in post.author.address %}
+                            {% if line is iterable %}
+                                <li>
+                                    {% for key, subline in line %}
+                                        {{ key }}: {{ subline }}
+                                    {% endfor %}
+                                </li>
+                            {% else %}
+                                <li>{{ line }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

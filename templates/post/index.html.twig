@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    {% for post in pagination.items %}
+        <twig:ArticlePreview :post="post" />
+    {% endfor %}
+    <div class="pagination">
+        {{ knp_pagination_render(pagination, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
+    </div>
+{% endblock %}
